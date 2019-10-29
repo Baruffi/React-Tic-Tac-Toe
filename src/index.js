@@ -151,39 +151,39 @@ class Game extends React.Component {
   }
 
   checkWin(vals) {
-    if (
-    (vals.some(row => row.includes('0'))
+    if ((
+       vals.some(row => row.includes('0'))
     && vals.some(row => row.includes('4'))
-    && vals.some(row => row.includes('8')))
-    ||
-    (vals.some(row => row.includes('2'))
+    && vals.some(row => row.includes('8'))
+    ) || (
+       vals.some(row => row.includes('2'))
     && vals.some(row => row.includes('4'))
-    && vals.some(row => row.includes('6')))
-    ||
-    (vals.some(row => row.includes('0'))
+    && vals.some(row => row.includes('6'))
+    ) || (
+       vals.some(row => row.includes('0'))
     && vals.some(row => row.includes('3'))
-    && vals.some(row => row.includes('6')))
-    ||
-    (vals.some(row => row.includes('1'))
+    && vals.some(row => row.includes('6'))
+    ) || (
+       vals.some(row => row.includes('1'))
     && vals.some(row => row.includes('4'))
-    && vals.some(row => row.includes('7')))
-    ||
-    (vals.some(row => row.includes('2'))
-    && vals.some(row => row.includes('5'))
-    && vals.some(row => row.includes('8')))
-    ||
-    (vals.some(row => row.includes('0'))
-    && vals.some(row => row.includes('1'))
-    && vals.some(row => row.includes('2')))
-    ||
-    (vals.some(row => row.includes('3'))
-    && vals.some(row => row.includes('4'))
-    && vals.some(row => row.includes('5')))
-    ||
-    (vals.some(row => row.includes('6'))
     && vals.some(row => row.includes('7'))
-    && vals.some(row => row.includes('8')))
-    ) {
+    ) || (
+       vals.some(row => row.includes('2'))
+    && vals.some(row => row.includes('5'))
+    && vals.some(row => row.includes('8'))
+    ) || (
+       vals.some(row => row.includes('0'))
+    && vals.some(row => row.includes('1'))
+    && vals.some(row => row.includes('2'))
+    ) || (
+       vals.some(row => row.includes('3'))
+    && vals.some(row => row.includes('4'))
+    && vals.some(row => row.includes('5'))
+    ) || (
+       vals.some(row => row.includes('6'))
+    && vals.some(row => row.includes('7'))
+    && vals.some(row => row.includes('8'))
+    )) {
       return true;
     }
   }
