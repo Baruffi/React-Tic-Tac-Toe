@@ -7,6 +7,8 @@ let next = false;
 let reset = false;
 let won = false;
 let rewindSpot = [];
+let global_load = new Date();
+let clock_stop = false;
 
 class Move extends React.Component {
   handleClick = () => {
@@ -193,8 +195,11 @@ class Game extends React.Component {
       this.reset();
       reset = false;
       next = false;
+      global_load = new Date();
     }
 
+    won = false;
+    clock_stop = false;
     rewindSpot = [];
 
     const Xvals = this.state.prev.filter(value => value.includes('X'));
@@ -203,20 +208,20 @@ class Game extends React.Component {
     if (this.checkWin(Xvals)) {
       alert('Win for X!');
       won = true;
+      clock_stop = true;
     } else if(this.checkWin(Ovals)) {
       alert('Win for O!');
       won = true;
+      clock_stop = true;
     } else if (this.state.prev.length === 9) {
       alert('Draw!');
+      clock_stop = true;
     }
 
     // console.log('updated the game!');
   }
 
   rewindToMove = (index) => {
-    this.victoryString = '';
-    won = false;
-
     let history = [];
 
     for (let i = 0 ; i < index - 1; i++) {
@@ -235,9 +240,6 @@ class Game extends React.Component {
       turn: history.length,
       prev: [...history.reverse()],
     });
-
-    // console.log(...history);
-    // console.log(...rewindSpot);
   }
 
   makeMove = (square, player) => {
@@ -278,8 +280,7 @@ class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      load: new Date(),
-      date: new Date(),
+      time: 0,
     };
   }
 
@@ -295,15 +296,23 @@ class Clock extends React.Component {
   }
 
   tick() {
-    this.setState({
-      date: new Date(),
-    });
+    if (!clock_stop) {
+      let time = Math.floor((new Date().getTime() - global_load.getTime()) / 1000);
+      if (time < 0) {
+        time = 0;
+      }
+      this.setState({
+        time: time,
+      });
+    } else {
+      global_load = new Date(new Date().getTime() - 1000 * this.state.time);
+    }
   }
 
   render() {
     return (
       <div>
-        <p>Time spent: {Math.floor((this.state.date.getTime() - this.state.load.getTime())/1000)}s.</p>
+        <p>Time spent: {this.state.time}s.</p>
       </div>
     );
   }
